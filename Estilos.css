@@ -1,0 +1,12 @@
+body{
+    margin: 0;
+    padding: 0;
+    background-color: #204051;
+}
+    div{
+        display: flex;
+        justify-content: center;
+    }
+        canvas{
+            background-color: #142850;
+        }
