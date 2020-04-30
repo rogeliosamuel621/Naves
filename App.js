@@ -15,14 +15,27 @@ var shootDy = 5;
 function bullet(x,y) {
     this.x = x;
     this.y = y;
+    this.status = 1;
 }
 var newBullet;
 var numOfBullets = -1;
 var array = [];
-var i = -1
-var a = 1;
-var b = 2;
-var aarray2 = [];
+
+var enemiesRows = 3;
+var enemiesColumns = 12;
+var enemiesWitdh = 20;
+var enemiesHeight = 20;
+var enemiesMarginTop = 30; 
+var enemiesMarginleft = 65;
+var enemiesPadding = 50;
+
+var enemies = [];//filling the matrix
+for(c=0; c<enemiesColumns; c++) {
+    enemies[c] = [];
+    for(r=0; r<enemiesRows; r++) {
+        enemies[c][r] = {x:0, y:0, status:1}
+    }
+}
 
 
 document.addEventListener('keydown', function move(e){
@@ -37,7 +50,8 @@ document.addEventListener('keydown', function move(e){
 
         ShootX = spaceShipX;
         newBullet = new bullet(ShootX, shootY);
-        array.push(newBullet.x, newBullet.y);
+        array.push(newBullet.x, newBullet.y, newBullet.status);
+        console.log(array)
         shootY = canvas.height-80;
         numOfBullets++;
     }
@@ -59,6 +73,7 @@ document.addEventListener('keyup', function dontMove(e) {
 function play() {
 
     printSpaceShip();
+    printEnemies();
     shooting();
     requestAnimationFrame(play);
 }
@@ -84,354 +99,315 @@ function printSpaceShip() {
 function shooting() {
 
     if(numOfBullets > -1){
-        ctx.beginPath();
-        ctx.rect(array[0]+7.5, array[1], 5, 20);
-        ctx.fillStyle = '#ffffff';
-        ctx.fill();
-        ctx.closePath();
-    
-        array[1] -= shootDy;  
+        if(array[2] === 1) {//status
+            ctx.beginPath();
+                        //x            //y
+            ctx.rect(array[0]+7.5, array[1], 5, 20);
+            ctx.fillStyle = '#ffffff';
+            ctx.fill();
+            ctx.closePath();
+                //y
+            array[1] -= shootDy;
 
-        if(array[1] < 0) {
-    shootY = canvas.height-80;
-        }
+            for(c=0; c<enemiesColumns; c++) {
+                for(r=0; r<enemiesRows; r++) {
+                    b = enemies[c][r];
+                    if(b.status == 1) {
+                        if(array[1] < b.y + enemiesWitdh && array[0] > b.x - enemiesWitdh-12 && array[0] < b.x + enemiesWitdh) {
+                              //y                              //x                                  //x
+                            b.status = 0;//so it wont print it in the next frame    
+                            array[2] = 0;//status
+                            
+                        }
+                    }
+                }
+            }
+        }  
     }
-
-    if(numOfBullets > 0){
-        ctx.beginPath();
-        ctx.rect(array[2]+7.5, array[3], 5, 20);
-        ctx.fillStyle = '#ffffff';
-        ctx.fill();
-        ctx.closePath();
     
-        array[3] -= shootDy;  
+    if(numOfBullets > 0){
+        if(array[5] === 1) {
+            ctx.beginPath();
+            ctx.rect(array[3]+7.5, array[4], 5, 20);
+            ctx.fillStyle = '#ffffff';
+            ctx.fill();
+            ctx.closePath();
+        
+            array[4] -= shootDy;
 
-        if(array[3] < 0) {
-    shooshootY = canvas.height-80;
-
-        }
+            for(c=0; c<enemiesColumns; c++) {
+                for(r=0; r<enemiesRows; r++) {
+                    b = enemies[c][r];
+                    if(b.status == 1) {
+                        if(array[4] < b.y + enemiesWitdh && array[3] > b.x - enemiesWitdh-12 && array[3] < b.x + enemiesWitdh) {
+                            
+                            b.status = 0;//so it wont print it in the next frame    
+                            array[5] = 0;   
+                            
+                        }
+                    }
+                }
+            }
+        }  
     }
 
     if(numOfBullets > 1){
-        ctx.beginPath();
-        ctx.rect(array[4]+7.5, array[5], 5, 20);
-        ctx.fillStyle = '#ffffff';
-        ctx.fill();
-        ctx.closePath();
-    
-        array[5] -= shootDy;  
+        if(array[8] === 1) {
+            ctx.beginPath();
+            ctx.rect(array[6]+7.5, array[7], 5, 20);
+            ctx.fillStyle = '#ffffff';
+            ctx.fill();
+            ctx.closePath();
+        
+            array[7] -= shootDy;
 
-        if(array[5] < 0) {
-    shooshootY = canvas.height-80;
-
-        }
+            for(c=0; c<enemiesColumns; c++) {
+                for(r=0; r<enemiesRows; r++) {
+                    b = enemies[c][r];
+                    if(b.status == 1) {
+                        if(array[7] < b.y + enemiesWitdh && array[6] > b.x - enemiesWitdh-12 && array[6] < b.x + enemiesWitdh) {
+                            
+                            b.status = 0;//so it wont print it in the next frame    
+                            array[8] = 0;   
+                            
+                        }
+                    }
+                }
+            }
+        }  
     }
 
     if(numOfBullets > 2){
-        ctx.beginPath();
-        ctx.rect(array[6]+7.5, array[7], 5, 20);
-        ctx.fillStyle = '#ffffff';
-        ctx.fill();
-        ctx.closePath();
-    
-        array[7] -= shootDy;  
+        if(array[11] === 1) {//status
+            ctx.beginPath();
+                        //x            //y
+            ctx.rect(array[9]+7.5, array[10], 5, 20);
+            ctx.fillStyle = '#ffffff';
+            ctx.fill();
+            ctx.closePath();
+                //y
+            array[10] -= shootDy;
 
-        if(array[7] < 0) {
-    shooshootY = canvas.height-80;
-
-        }
+            for(c=0; c<enemiesColumns; c++) {
+                for(r=0; r<enemiesRows; r++) {
+                    b = enemies[c][r];
+                    if(b.status == 1) {
+                        if(array[10] < b.y + enemiesWitdh && array[9] > b.x - enemiesWitdh-12 && array[9] < b.x + enemiesWitdh) {
+                              //y                              //x                                  //x
+                            b.status = 0;//so it wont print it in the next frame    
+                            array[11] = 0;//status
+                            
+                        }
+                    }
+                }
+            }
+        }  
     }
 
     if(numOfBullets > 3){
-        ctx.beginPath();
-        ctx.rect(array[8]+7.5, array[9], 5, 20);
-        ctx.fillStyle = '#ffffff';
-        ctx.fill();
-        ctx.closePath();
-    
-        array[9] -= shootDy;  
+        if(array[14] === 1) {//status
+            ctx.beginPath();
+                        //x            //y
+            ctx.rect(array[12]+7.5, array[13], 5, 20);
+            ctx.fillStyle = '#ffffff';
+            ctx.fill();
+            ctx.closePath();
+                //y
+            array[13] -= shootDy;
 
-        if(array[9] < 0) {
-    shooshootY = canvas.height-80;
-
-        }
+            for(c=0; c<enemiesColumns; c++) {
+                for(r=0; r<enemiesRows; r++) {
+                    b = enemies[c][r];
+                    if(b.status == 1) {
+                        if(array[13] < b.y + enemiesWitdh && array[12] > b.x - enemiesWitdh-12 && array[12] < b.x + enemiesWitdh) {
+                              //y                              //x                                  //x
+                            b.status = 0;//so it wont print it in the next frame    
+                            array[14] = 0;//status
+                            
+                        }
+                    }
+                }
+            }
+        }  
     }
 
     if(numOfBullets > 4){
-        ctx.beginPath();
-        ctx.rect(array[10]+7.5, array[11], 5, 20);
-        ctx.fillStyle = '#ffffff';
-        ctx.fill();
-        ctx.closePath();
-    
-        array[11] -= shootDy;  
+        if(array[17] === 1) {//status
+            ctx.beginPath();
+                        //x            //y
+            ctx.rect(array[15]+7.5, array[16], 5, 20);
+            ctx.fillStyle = '#ffffff';
+            ctx.fill();
+            ctx.closePath();
+                //y
+            array[16] -= shootDy;
 
-        if(array[11] < 0) {
-    shooshootY = canvas.height-80;
-
-        }
+            for(c=0; c<enemiesColumns; c++) {
+                for(r=0; r<enemiesRows; r++) {
+                    b = enemies[c][r];
+                    if(b.status == 1) {
+                        if(array[16] < b.y + enemiesWitdh && array[15] > b.x - enemiesWitdh-12 && array[15] < b.x + enemiesWitdh) {
+                              //y                              //x                                  //x
+                            b.status = 0;//so it wont print it in the next frame    
+                            array[17] = 0;//status
+                            
+                        }
+                    }
+                }
+            }
+        }  
     }
 
     if(numOfBullets > 5){
-        ctx.beginPath();
-        ctx.rect(array[12]+7.5, array[13], 5, 20);
-        ctx.fillStyle = '#ffffff';
-        ctx.fill();
-        ctx.closePath();
-    
-        array[13] -= shootDy;  
+        if(array[20] === 1) {//status
+            ctx.beginPath();
+                        //x            //y
+            ctx.rect(array[18]+7.5, array[19], 5, 20);
+            ctx.fillStyle = '#ffffff';
+            ctx.fill();
+            ctx.closePath();
+                //y
+            array[19] -= shootDy;
 
-        if(array[13] < 0) {
-    shooshootY = canvas.height-80;
-
-        }
+            for(c=0; c<enemiesColumns; c++) {
+                for(r=0; r<enemiesRows; r++) {
+                    b = enemies[c][r];
+                    if(b.status == 1) {
+                        if(array[19] < b.y + enemiesWitdh && array[18] > b.x - enemiesWitdh-12 && array[18] < b.x + enemiesWitdh) {
+                              //y                              //x                                  //x
+                            b.status = 0;//so it wont print it in the next frame    
+                            array[20] = 0;//status
+                            array[19] = -1;
+                        }
+                    }
+                }
+            }
+        }  
     }
 
     if(numOfBullets > 6){
-        ctx.beginPath();
-        ctx.rect(array[14]+7.5, array[15], 5, 20);
-        ctx.fillStyle = '#ffffff';
-        ctx.fill();
-        ctx.closePath();
-    
-        array[15] -= shootDy;  
+        if(array[23] === 1) {//status
+            ctx.beginPath();
+                        //x            //y
+            ctx.rect(array[21]+7.5, array[22], 5, 20);
+            ctx.fillStyle = '#ffffff';
+            ctx.fill();
+            ctx.closePath();
+                //y
+            array[22] -= shootDy;
 
-        if(array[15] < 0) {
-    shooshootY = canvas.height-80;
-
-        }
+            for(c=0; c<enemiesColumns; c++) {
+                for(r=0; r<enemiesRows; r++) {
+                    b = enemies[c][r];
+                    if(b.status == 1) {
+                        if(array[22] < b.y + enemiesWitdh && array[21] > b.x - enemiesWitdh-12 && array[21] < b.x + enemiesWitdh) {
+                              //y                              //x                                  //x
+                            b.status = 0;//so it wont print it in the next frame    
+                            array[23] = 0;//status
+                            array[22] = -1;//y
+                        }
+                    }
+                }
+            }
+        }  
     }
 
     if(numOfBullets > 7){
-        ctx.beginPath();
-        ctx.rect(array[16]+7.5, array[17], 5, 20);
-        ctx.fillStyle = '#ffffff';
-        ctx.fill();
-        ctx.closePath();
-    
-        array[17] -= shootDy;  
+        if(array[26] === 1) {//status
+            ctx.beginPath();
+                        //x            //y
+            ctx.rect(array[24]+7.5, array[25], 5, 20);
+            ctx.fillStyle = '#ffffff';
+            ctx.fill();
+            ctx.closePath();
+                //y
+            array[25] -= shootDy;
 
-        if(array[17] < 0) {
-    shooshootY = canvas.height-80;
-
-        }
+            for(c=0; c<enemiesColumns; c++) {
+                for(r=0; r<enemiesRows; r++) {
+                    b = enemies[c][r];
+                    if(b.status == 1) {
+                        if(array[25] < b.y + enemiesWitdh && array[24] > b.x - enemiesWitdh-12 && array[24] < b.x + enemiesWitdh) {
+                              //y                              //x                                  //x
+                            b.status = 0;//so it wont print it in the next frame    
+                            array[26] = 0;//status
+                            array[25] = -1;//y
+                        }
+                    }
+                }
+            }
+        }  
     }
 
     if(numOfBullets > 8){
-        ctx.beginPath();
-        ctx.rect(array[18]+7.5, array[19], 5, 20);
-        ctx.fillStyle = '#ffffff';
-        ctx.fill();
-        ctx.closePath();
-    
-        array[19] -= shootDy;  
+        if(array[29] === 1) {//status
+            ctx.beginPath();
+                        //x            //y
+            ctx.rect(array[27]+7.5, array[28], 5, 20);
+            ctx.fillStyle = '#ffffff';
+            ctx.fill();
+            ctx.closePath();
+                //y
+            array[28] -= shootDy;
 
-        if(array[19] < 0) {
-    shooshootY = canvas.height-80;
-
-        }
+            for(c=0; c<enemiesColumns; c++) {
+                for(r=0; r<enemiesRows; r++) {
+                    b = enemies[c][r];
+                    if(b.status == 1) {
+                        if(array[28] < b.y + enemiesWitdh && array[28] > b.x - enemiesWitdh-12 && array[28] < b.x + enemiesWitdh) {
+                              //y                              //x                                  //x
+                            b.status = 0;//so it wont print it in the next frame    
+                            array[29] = 0;//status
+                            array[29] = -1;//y
+                        }
+                    }
+                }
+            }
+        }  
     }
-    if(numOfBullets > 9){
-        ctx.beginPath();
-        ctx.rect(array[20]+7.5, array[21], 5, 20);
-        ctx.fillStyle = '#ffffff';
-        ctx.fill();
-        ctx.closePath();
-    
-        array[21] -= shootDy;  
 
-        if(array[21] < 0) {
-    shooshootY = canvas.height-80;
-
-        }
+    if(array[29] < 0 && reload) {
+        array = [];
+        reload = false;
     }
-    if(numOfBullets > 10){
-        ctx.beginPath();
-        ctx.rect(array[22]+7.5, array[23], 5, 20);
-        ctx.fillStyle = '#ffffff';
-        ctx.fill();
-        ctx.closePath();
-    
-        array[23] -= shootDy;  
 
-        if(array[23] < 0) {
-    shooshootY = canvas.height-80;
+}
 
+function printEnemies() {
+
+    for(let c=0; c<enemiesColumns; c++) {
+        for(let r=0; r<enemiesRows; r++) {
+
+            if(enemies[c][r].status === 1) {
+
+                var enemieX = (c*(enemiesWitdh+enemiesPadding))+enemiesMarginleft;
+                var enemieY = (r*(enemiesHeight+enemiesPadding))+enemiesMarginTop;
+
+                enemies[c][r].x = enemieX;
+                enemies[c][r].y = enemieY;
+
+                ctx.beginPath();
+                ctx.arc(enemieX, enemieY, enemiesWitdh, 0, Math.PI*2);
+                ctx.fillStyle = "#bb3b0e";
+                ctx.fill();
+                ctx.closePath();
+            }
         }
-    }
-    if(numOfBullets > 11){
-        ctx.beginPath();
-        ctx.rect(array[24]+7.5, array[25], 5, 20);
-        ctx.fillStyle = '#ffffff';
-        ctx.fill();
-        ctx.closePath();
-    
-        array[25] -= shootDy;  
+    } 
+}
 
-        if(array[25] < 0) {
-    shooshootY = canvas.height-80;
+function crush() {
 
-        }
-    }
-    if(numOfBullets > 12){
-        ctx.beginPath();
-        ctx.rect(array[26]+7.5, array[27], 5, 20);
-        ctx.fillStyle = '#ffffff';
-        ctx.fill();
-        ctx.closePath();
-    
-        array[27] -= shootDy;  
-
-        if(array[27] < 0) {
-    shooshootY = canvas.height-80;
-
-        }
-    }
-    if(numOfBullets > 13){
-        ctx.beginPath();
-        ctx.rect(array[28]+7.5, array[29], 5, 20);
-        ctx.fillStyle = '#ffffff';
-        ctx.fill();
-        ctx.closePath();
-    
-        array[29] -= shootDy;  
-
-        if(array[29] < 0) {
-    shooshootY = canvas.height-80;
-
-        }
-    }
-    if(numOfBullets > 14){
-        ctx.beginPath();
-        ctx.rect(array[30]+7.5, array[31], 5, 20);
-        ctx.fillStyle = '#ffffff';
-        ctx.fill();
-        ctx.closePath();
-    
-        array[31] -= shootDy;  
-
-        if(array[31] < 0) {
-    shooshootY = canvas.height-80;
-
-        }
-    }
-    if(numOfBullets > 15){
-        ctx.beginPath();
-        ctx.rect(array[32]+7.5, array[33], 5, 20);
-        ctx.fillStyle = '#ffffff';
-        ctx.fill();
-        ctx.closePath();
-    
-        array[33] -= shootDy;  
-
-        if(array[33] < 0) {
-    shooshootY = canvas.height-80;
-
-        }
-    }
-    if(numOfBullets > 16){
-        ctx.beginPath();
-        ctx.rect(array[34]+7.5, array[35], 5, 20);
-        ctx.fillStyle = '#ffffff';
-        ctx.fill();
-        ctx.closePath();
-    
-        array[35] -= shootDy;  
-
-        if(array[35] < 0) {
-    shooshootY = canvas.height-80;
-
-        }
-    }
-    if(numOfBullets > 17){
-        ctx.beginPath();
-        ctx.rect(array[36]+7.5, array[37], 5, 20);
-        ctx.fillStyle = '#ffffff';
-        ctx.fill();
-        ctx.closePath();
-    
-        array[37] -= shootDy;  
-
-        if(array[37] < 0) {
-    shooshootY = canvas.height-80;
-
-        }
-    }
-    if(numOfBullets > 18){
-        ctx.beginPath();
-        ctx.rect(array[38]+7.5, array[39], 5, 20);
-        ctx.fillStyle = '#ffffff';
-        ctx.fill();
-        ctx.closePath();
-    
-        array[39] -= shootDy;  
-
-        if(array[39] < 0) {
-    shooshootY = canvas.height-80;
-
-        }
-    }
-    if(numOfBullets > 19){
-        ctx.beginPath();
-        ctx.rect(array[40]+7.5, array[41], 5, 20);
-        ctx.fillStyle = '#ffffff';
-        ctx.fill();
-        ctx.closePath();
-    
-        array[41] -= shootDy;  
-
-        if(array[41] < 0) {
-    shooshootY = canvas.height-80;
-
-        }
-    }
-    if(numOfBullets > 20){
-        ctx.beginPath();
-        ctx.rect(array[42]+7.5, array[43], 5, 20);
-        ctx.fillStyle = '#ffffff';
-        ctx.fill();
-        ctx.closePath();
-    
-        array[43] -= shootDy;  
-
-        if(array[43] < 0) {
-    shooshootY = canvas.height-80;
-
-        }
-    }
-    if(numOfBullets > 21){
-        ctx.beginPath();
-        ctx.rect(array[44]+7.5, array[45], 5, 20);
-        ctx.fillStyle = '#ffffff';
-        ctx.fill();
-        ctx.closePath();
-    
-        array[45] -= shootDy;  
-
-        if(array[45] < 0) {
-    shooshootY = canvas.height-80;
-
-        }
-    }
-    if(numOfBullets > 22){
-        ctx.beginPath();
-        ctx.rect(array[46]+7.5, array[47], 5, 20);
-        ctx.fillStyle = '#ffffff';
-        ctx.fill();
-        ctx.closePath();
-    
-        array[47] -= shootDy;  
-
-        if(array[47] < 0) {
-    shooshootY = canvas.height-80;
-
-        }
-    }
-    if(numOfBullets > 23) {
-        if(array[47] < 0 && reload) {
-            array = [];
-            numOfBullets = -1;
-            reload = false;
+    for(c=0; c<enemiesColumns; c++) {
+        for(r=0; r<enemiesRows; r++) {
+            var b = enemies[c][r];
+            if(b.status == 1) {
+                if(x > b.x && x < b.x+blockWidth+this.ballRadius && y > b.y && y < b.y+blockHeight+this.ballRadius) {
+                    
+                    b.status = 0;//so it wont print it in the next frame
+                    
+                }
+            }
         }
     }
 }
