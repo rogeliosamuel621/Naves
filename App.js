@@ -36,6 +36,18 @@ for(c=0; c<enemiesColumns; c++) {
         enemies[c][r] = {x:0, y:0, status:1}
     }
 }
+var starX = 0
+var starY = 0;
+var endStar = false;
+var starDy = 8;
+function stars() {this.x = 0, this.y = 0, this.status = 0}
+var vector = [];
+var newStar;
+for(var i=0; i<30; i++) {
+    newStar = new stars();
+    vector[i] = newStar;
+    console.log(vector[i])
+}
 
 
 document.addEventListener('keydown', function move(e){
@@ -72,9 +84,11 @@ document.addEventListener('keyup', function dontMove(e) {
 
 function play() {
 
+    
     printSpaceShip();
     printEnemies();
     shooting();
+    backgorund();
     requestAnimationFrame(play);
 }
 play();
@@ -354,11 +368,11 @@ function shooting() {
                 for(r=0; r<enemiesRows; r++) {
                     b = enemies[c][r];
                     if(b.status == 1) {
-                        if(array[28] < b.y + enemiesWitdh && array[28] > b.x - enemiesWitdh-12 && array[28] < b.x + enemiesWitdh) {
+                        if(array[28] < b.y + enemiesWitdh && array[27] > b.x - enemiesWitdh-12 && array[27] < b.x + enemiesWitdh) {
                               //y                              //x                                  //x
                             b.status = 0;//so it wont print it in the next frame    
                             array[29] = 0;//status
-                            array[29] = -1;//y
+                            array[28] = -1;//y
                         }
                     }
                 }
@@ -366,7 +380,61 @@ function shooting() {
         }  
     }
 
-    if(array[29] < 0 && reload) {
+    if(numOfBullets > 9){
+        if(array[32] === 1) {//status
+            ctx.beginPath();
+                        //x            //y
+            ctx.rect(array[30]+7.5, array[31], 5, 20);
+            ctx.fillStyle = '#ffffff';
+            ctx.fill();
+            ctx.closePath();
+                //y
+            array[31] -= shootDy;
+
+            for(c=0; c<enemiesColumns; c++) {
+                for(r=0; r<enemiesRows; r++) {
+                    b = enemies[c][r];
+                    if(b.status == 1) {
+                        if(array[31] < b.y + enemiesWitdh && array[30] > b.x - enemiesWitdh-12 && array[30] < b.x + enemiesWitdh) {
+                              //y                              //x                                  //x
+                            b.status = 0;//so it wont print it in the next frame    
+                            array[32] = 0;//status
+                            array[31] = -1;//y
+                        }
+                    }
+                }
+            }
+        }  
+    }
+
+    if(numOfBullets > 10){
+        if(array[35] === 1) {//status
+            ctx.beginPath();
+                        //x            //y
+            ctx.rect(array[33]+7.5, array[34], 5, 20);
+            ctx.fillStyle = '#ffffff';
+            ctx.fill();
+            ctx.closePath();
+                //y
+            array[34] -= shootDy;
+
+            for(c=0; c<enemiesColumns; c++) {
+                for(r=0; r<enemiesRows; r++) {
+                    b = enemies[c][r];
+                    if(b.status == 1) {
+                        if(array[34] < b.y + enemiesWitdh && array[33] > b.x - enemiesWitdh-12 && array[33] < b.x + enemiesWitdh) {
+                              //y                              //x                                  //x
+                            b.status = 0;//so it wont print it in the next frame    
+                            array[35] = 0;//status
+                            array[34] = -1;//y
+                        }
+                    }
+                }
+            }
+        }  
+    }
+
+    if(array[34] < 0 && reload) {
         array = [];
         reload = false;
     }
@@ -396,18 +464,29 @@ function printEnemies() {
     } 
 }
 
-function crush() {
+function backgorund() {
 
-    for(c=0; c<enemiesColumns; c++) {
-        for(r=0; r<enemiesRows; r++) {
-            var b = enemies[c][r];
-            if(b.status == 1) {
-                if(x > b.x && x < b.x+blockWidth+this.ballRadius && y > b.y && y < b.y+blockHeight+this.ballRadius) {
-                    
-                    b.status = 0;//so it wont print it in the next frame
-                    
-                }
-            }
+    for(let i=0; i<vector.length; i++) {
+        
+        if(vector[i].status === 0) {
+            starX = Math.floor(Math.random() * (canvas.width - 0)) + 0;
+            starY = Math.floor(Math.random() * ((canvas.height-300) - 0)) + 0;
+            vector[i].x = starX;
+            vector[i].y = starY;
+            vector[i].status = 1;
+        }
+
+        ctx.beginPath();
+        ctx.rect(vector[i].x, vector[i].y, 2, 1);
+        ctx.fillStyle = '#ffffff';
+        ctx.fill();
+        ctx.closePath();
+
+        vector[i].y += starDy;
+
+        if(vector[i].y > canvas.height) {
+            vector[i].y = 0;
+            vector[i].status = 0;
         }
     }
 }
