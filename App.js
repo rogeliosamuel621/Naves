@@ -49,7 +49,6 @@ var enemiesBand = 0;
 //stars for the background
 var starX = 0
 var starY = 0;
-var endStar = false;
 var starDy = 8;
 function stars() {this.x = 0, this.y = 0, this.status = 0}
 var vector = [];
@@ -57,7 +56,24 @@ var newStar;
 for(var i=0; i<30; i++) {
     newStar = new stars();
     vector[i] = newStar;
-    console.log(vector[i])
+}
+
+//boss
+var bossX = canvas.width/2;
+var bossY = (canvas.width/2)-850;
+var bossDx = 2;
+var bossDy = 2;
+var alreadySetY = false;
+var bossBulletX = 0;
+var bossBulletY = 0
+var bossBulletDy = 5;
+function bossBullets() {this.x = 0, this.y = 0, this.status = 0}
+var bossVector = [];
+var newBossBullet;
+for(var i=0; i<10; i++) {
+    newBossBullet = new bossBullets();
+    bossVector[i] = newBossBullet;
+    console.log(bossVector);
 }
 
 
@@ -101,6 +117,13 @@ function play() {
         shooting();
         backgorund();
         rules();
+    }
+    if(level === 2) {
+        printSpaceShip();
+        shooting();
+        backgorund();
+        rules();
+        Boss();
     }
     requestAnimationFrame(play);
 }
@@ -465,8 +488,10 @@ function shooting() {//dont open it
     }
 
     if(score === (enemiesColumns*enemiesRows)) {
+        score = 0;
         alert('Has ganao');
-        document.location.reload();
+        level = 2;
+        array = [];
     }
 }
 
@@ -548,4 +573,44 @@ function rules() {
     ctx.font = "16px Arial";
     ctx.fillStyle = "#ffffff";
     ctx.fillText("vidas: " + lives,canvas.width-80,15);
+}
+
+function Boss() {
+
+    ctx.beginPath();
+    ctx.arc(bossX, bossY, 200, 0, Math.PI*2);
+    ctx.fillStyle = "#bb3b0e";
+    ctx.fill();
+    ctx.closePath();
+
+    if(!alreadySetY) {
+
+        bossY += bossDy;
+        if(bossY === (canvas.width/2)-500) {
+            alreadySetY = true;
+        }
+    }
+    if(alreadySetY) {
+        for(var i=0; i<bossVector.length; i++) {
+            if(bossVector[i].status === 0) {
+                bossBulletX = Math.floor(Math.random() * (canvas.width-150 - 150)) + 150;
+                bossBulletY = Math.floor(Math.random() * (10 - 0)) + 0;
+                bossVector[i].x = bossBulletX;
+                bossVector[i].y = bossBulletY;
+                bossVector[i].status = 1;
+            }
+            ctx.beginPath();
+            ctx.rect(bossVector[i].x, bossVector[i].y, 10, 10);
+            ctx.fillStyle = '#bb3b0e';
+            ctx.fill();
+            ctx.closePath();
+
+            bossVector[i].y += bossBulletDy;
+
+            if(bossVector[i].y > canvas.height) {
+                bossVector[i].y = 0;
+                bossVector[i].status = 0;
+            }
+        }
+    }
 }
