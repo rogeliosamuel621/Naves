@@ -1,6 +1,7 @@
-var level = 1;
+var level = 2;
 var score = 0;
 var lives = 3;
+var damage = false;
 var canvas = document.getElementById('canvas');
 var ctx = canvas.getContext('2d');//to draw
 var spaceShipX = canvas.width/2;
@@ -67,7 +68,7 @@ var alreadySetY = false;
 var bossBulletX = 0;
 var bossBulletY = 0
 var bossBulletDy = 5;
-function bossBullets() {this.x = 0, this.y = 0, this.status = 0}
+function bossBullets() {this.x = 0, this.y = 0, this.status = 0, this.print = 0}
 var bossVector = [];
 var newBossBullet;
 for(var i=0; i<10; i++) {
@@ -75,6 +76,7 @@ for(var i=0; i<10; i++) {
     bossVector[i] = newBossBullet;
     console.log(bossVector);
 }
+var contador = 0;
 
 
 document.addEventListener('keydown', function move(e){
@@ -144,6 +146,17 @@ function printSpaceShip() {
     ctx.lineTo(spaceShipX+30,canvas.height-20);
     ctx.fillStyle = '#3c4245'
     ctx.fill();
+
+    if(damage == true) {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.beginPath();
+        ctx.moveTo(spaceShipX-10,spaceShipY);
+        ctx.lineTo(spaceShipX+10,canvas.height-50);
+        ctx.lineTo(spaceShipX+30,canvas.height-20);
+        ctx.fillStyle = '#888888'
+        ctx.fill();
+        damage = false;
+    }
 }
 
 function shooting() {//dont open it
@@ -607,9 +620,19 @@ function Boss() {
 
             bossVector[i].y += bossBulletDy;
 
+            if(bossVector[i].x > spaceShipX-10 && bossVector[i].x - 10 < spaceShipX+30 && bossVector[i].y+10 > spaceShipY) {
+                damage = true;
+                bossVector[i].y = 0;
+                bossVector[i].status = 0;
+                lives--;
+            }
+
             if(bossVector[i].y > canvas.height) {
                 bossVector[i].y = 0;
                 bossVector[i].status = 0;
+            }
+            if(lives === 0) {
+                document.location.reload();
             }
         }
     }
