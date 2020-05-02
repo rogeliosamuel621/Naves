@@ -1,17 +1,18 @@
 var canvas = document.getElementById('canvas');
-var ctx = canvas.getContext('2d');
+var ctx = canvas.getContext('2d');//to draw
 var spaceShipX = canvas.width/2;
 var spaceShipY = canvas.height - 20;
-var dx = 5;
-var dy = 5;
-var right = false;
+var dx = 5;//to move the ship
+var dy = 5;//to move the ship
+var right = false;//to verify whereis moving to
 var left = false;
 var shoot = false;
-var ShootX = spaceShipX;
-var shootY = canvas.height-80;
-var reload = false;
+var ShootX = spaceShipX;//bullet
+var shootY = canvas.height-80;//bullet
+var reload = false;//empty the array
 
-var shootDy = 5;
+//bullets
+var shootDy = 5;//to move the bullet
 function bullet(x,y) {
     this.x = x;
     this.y = y;
@@ -19,23 +20,30 @@ function bullet(x,y) {
 }
 var newBullet;
 var numOfBullets = -1;
-var array = [];
+var array = [];//to store the bullets
 
+//enemies
+var enemieY = 0;
+var enemieX = 0; 
 var enemiesRows = 3;
-var enemiesColumns = 12;
+var enemiesColumns = 6;
 var enemiesWitdh = 20;
 var enemiesHeight = 20;
 var enemiesMarginTop = 30; 
-var enemiesMarginleft = 65;
-var enemiesPadding = 50;
-
+var enemiesMarginleft = 210;
+var enemiesPadding = 80;
 var enemies = [];//filling the matrix
 for(c=0; c<enemiesColumns; c++) {
     enemies[c] = [];
     for(r=0; r<enemiesRows; r++) {
-        enemies[c][r] = {x:0, y:0, status:1}
+        enemies[c][r] = {x:0, y:0, status:1, alreadyPrinted: 0, look: 0}
     }
 }
+var enemiesDx = 2;
+var enemiesBand = 0;
+
+
+//stars for the background
 var starX = 0
 var starY = 0;
 var endStar = false;
@@ -61,9 +69,8 @@ document.addEventListener('keydown', function move(e){
     if(e.keyCode == 32) {//space
 
         ShootX = spaceShipX;
-        newBullet = new bullet(ShootX, shootY);
-        array.push(newBullet.x, newBullet.y, newBullet.status);
-        console.log(array)
+        newBullet = new bullet(ShootX, shootY);//create a new bullet
+        array.push(newBullet.x, newBullet.y, newBullet.status);//store the position of the bullet
         shootY = canvas.height-80;
         numOfBullets++;
     }
@@ -110,7 +117,7 @@ function printSpaceShip() {
     ctx.fill();
 }
 
-function shooting() {
+function shooting() {//dont open it
 
     if(numOfBullets > -1){
         if(array[2] === 1) {//status
@@ -127,7 +134,7 @@ function shooting() {
                 for(r=0; r<enemiesRows; r++) {
                     b = enemies[c][r];
                     if(b.status == 1) {
-                        if(array[1] < b.y + enemiesWitdh && array[0] > b.x - enemiesWitdh-12 && array[0] < b.x + enemiesWitdh) {
+                        if(array[1] === b.y + enemiesWitdh && array[0] > b.x - enemiesWitdh-12 && array[0] < b.x + enemiesWitdh) {
                               //y                              //x                                  //x
                             b.status = 0;//so it wont print it in the next frame    
                             array[2] = 0;//status
@@ -153,7 +160,7 @@ function shooting() {
                 for(r=0; r<enemiesRows; r++) {
                     b = enemies[c][r];
                     if(b.status == 1) {
-                        if(array[4] < b.y + enemiesWitdh && array[3] > b.x - enemiesWitdh-12 && array[3] < b.x + enemiesWitdh) {
+                        if(array[4] === b.y + enemiesWitdh && array[3] > b.x - enemiesWitdh-12 && array[3] < b.x + enemiesWitdh) {
                             
                             b.status = 0;//so it wont print it in the next frame    
                             array[5] = 0;   
@@ -179,7 +186,7 @@ function shooting() {
                 for(r=0; r<enemiesRows; r++) {
                     b = enemies[c][r];
                     if(b.status == 1) {
-                        if(array[7] < b.y + enemiesWitdh && array[6] > b.x - enemiesWitdh-12 && array[6] < b.x + enemiesWitdh) {
+                        if(array[7] === b.y + enemiesWitdh && array[6] > b.x - enemiesWitdh-12 && array[6] < b.x + enemiesWitdh) {
                             
                             b.status = 0;//so it wont print it in the next frame    
                             array[8] = 0;   
@@ -206,7 +213,7 @@ function shooting() {
                 for(r=0; r<enemiesRows; r++) {
                     b = enemies[c][r];
                     if(b.status == 1) {
-                        if(array[10] < b.y + enemiesWitdh && array[9] > b.x - enemiesWitdh-12 && array[9] < b.x + enemiesWitdh) {
+                        if(array[10] === b.y + enemiesWitdh && array[9] > b.x - enemiesWitdh-12 && array[9] < b.x + enemiesWitdh) {
                               //y                              //x                                  //x
                             b.status = 0;//so it wont print it in the next frame    
                             array[11] = 0;//status
@@ -233,7 +240,7 @@ function shooting() {
                 for(r=0; r<enemiesRows; r++) {
                     b = enemies[c][r];
                     if(b.status == 1) {
-                        if(array[13] < b.y + enemiesWitdh && array[12] > b.x - enemiesWitdh-12 && array[12] < b.x + enemiesWitdh) {
+                        if(array[13] === b.y + enemiesWitdh && array[12] > b.x - enemiesWitdh-12 && array[12] < b.x + enemiesWitdh) {
                               //y                              //x                                  //x
                             b.status = 0;//so it wont print it in the next frame    
                             array[14] = 0;//status
@@ -260,7 +267,7 @@ function shooting() {
                 for(r=0; r<enemiesRows; r++) {
                     b = enemies[c][r];
                     if(b.status == 1) {
-                        if(array[16] < b.y + enemiesWitdh && array[15] > b.x - enemiesWitdh-12 && array[15] < b.x + enemiesWitdh) {
+                        if(array[16] === b.y + enemiesWitdh && array[15] > b.x - enemiesWitdh-12 && array[15] < b.x + enemiesWitdh) {
                               //y                              //x                                  //x
                             b.status = 0;//so it wont print it in the next frame    
                             array[17] = 0;//status
@@ -287,7 +294,7 @@ function shooting() {
                 for(r=0; r<enemiesRows; r++) {
                     b = enemies[c][r];
                     if(b.status == 1) {
-                        if(array[19] < b.y + enemiesWitdh && array[18] > b.x - enemiesWitdh-12 && array[18] < b.x + enemiesWitdh) {
+                        if(array[19] === b.y + enemiesWitdh && array[18] > b.x - enemiesWitdh-12 && array[18] < b.x + enemiesWitdh) {
                               //y                              //x                                  //x
                             b.status = 0;//so it wont print it in the next frame    
                             array[20] = 0;//status
@@ -314,7 +321,7 @@ function shooting() {
                 for(r=0; r<enemiesRows; r++) {
                     b = enemies[c][r];
                     if(b.status == 1) {
-                        if(array[22] < b.y + enemiesWitdh && array[21] > b.x - enemiesWitdh-12 && array[21] < b.x + enemiesWitdh) {
+                        if(array[22] === b.y + enemiesWitdh && array[21] > b.x - enemiesWitdh-12 && array[21] < b.x + enemiesWitdh) {
                               //y                              //x                                  //x
                             b.status = 0;//so it wont print it in the next frame    
                             array[23] = 0;//status
@@ -341,7 +348,7 @@ function shooting() {
                 for(r=0; r<enemiesRows; r++) {
                     b = enemies[c][r];
                     if(b.status == 1) {
-                        if(array[25] < b.y + enemiesWitdh && array[24] > b.x - enemiesWitdh-12 && array[24] < b.x + enemiesWitdh) {
+                        if(array[25] === b.y + enemiesWitdh && array[24] > b.x - enemiesWitdh-12 && array[24] < b.x + enemiesWitdh) {
                               //y                              //x                                  //x
                             b.status = 0;//so it wont print it in the next frame    
                             array[26] = 0;//status
@@ -368,7 +375,7 @@ function shooting() {
                 for(r=0; r<enemiesRows; r++) {
                     b = enemies[c][r];
                     if(b.status == 1) {
-                        if(array[28] < b.y + enemiesWitdh && array[27] > b.x - enemiesWitdh-12 && array[27] < b.x + enemiesWitdh) {
+                        if(array[28] === b.y + enemiesWitdh && array[27] > b.x - enemiesWitdh-12 && array[27] < b.x + enemiesWitdh) {
                               //y                              //x                                  //x
                             b.status = 0;//so it wont print it in the next frame    
                             array[29] = 0;//status
@@ -395,7 +402,7 @@ function shooting() {
                 for(r=0; r<enemiesRows; r++) {
                     b = enemies[c][r];
                     if(b.status == 1) {
-                        if(array[31] < b.y + enemiesWitdh && array[30] > b.x - enemiesWitdh-12 && array[30] < b.x + enemiesWitdh) {
+                        if(array[31] === b.y + enemiesWitdh && array[30] > b.x - enemiesWitdh-12 && array[30] < b.x + enemiesWitdh) {
                               //y                              //x                                  //x
                             b.status = 0;//so it wont print it in the next frame    
                             array[32] = 0;//status
@@ -422,7 +429,7 @@ function shooting() {
                 for(r=0; r<enemiesRows; r++) {
                     b = enemies[c][r];
                     if(b.status == 1) {
-                        if(array[34] < b.y + enemiesWitdh && array[33] > b.x - enemiesWitdh-12 && array[33] < b.x + enemiesWitdh) {
+                        if(array[34] === b.y + enemiesWitdh && array[33] > b.x - enemiesWitdh-12 && array[33] < b.x + enemiesWitdh) {
                               //y                              //x                                  //x
                             b.status = 0;//so it wont print it in the next frame    
                             array[35] = 0;//status
@@ -448,17 +455,36 @@ function printEnemies() {
 
             if(enemies[c][r].status === 1) {
 
-                var enemieX = (c*(enemiesWitdh+enemiesPadding))+enemiesMarginleft;
-                var enemieY = (r*(enemiesHeight+enemiesPadding))+enemiesMarginTop;
+                if(enemies[c][r].alreadyPrinted === 0) {
+                    enemieX = (c*(enemiesWitdh+enemiesPadding))+enemiesMarginleft;
+                    enemieY = (r*(enemiesHeight+enemiesPadding))+enemiesMarginTop;
+                    enemies[c][r].x = enemieX;
+                    enemies[c][r].y = enemieY;
+                    enemies[c][r].alreadyPrinted = 1;
 
-                enemies[c][r].x = enemieX;
-                enemies[c][r].y = enemieY;
+                    enemies[c][r].look = Math.floor(Math.random() * (2 - 1)) + 1;
+                }
 
                 ctx.beginPath();
-                ctx.arc(enemieX, enemieY, enemiesWitdh, 0, Math.PI*2);
+                ctx.arc(enemies[c][r].x, enemies[c][r].y, enemiesWitdh, 0, Math.PI*2);
                 ctx.fillStyle = "#bb3b0e";
                 ctx.fill();
                 ctx.closePath();
+
+                
+                if(enemies[c][r].x - enemiesWitdh > 0 && enemiesBand === 0 ) {
+                    enemies[c][r].x += enemiesDx;
+                }
+                if(enemies[c][r].x + enemiesWitdh === canvas.width-2) {
+                    enemiesBand = 1;
+                }
+                if(enemies[c][r].x - enemiesWitdh === 2) {
+                    enemiesBand = 0;
+                }
+                if(enemies[c][r].x + enemiesWitdh < canvas.width && enemiesBand === 1) {
+                    enemies[c][r].x -= enemiesDx;
+                }
+
             }
         }
     } 
