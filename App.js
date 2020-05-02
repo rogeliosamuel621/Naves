@@ -1,3 +1,6 @@
+var level = 1;
+var score = 0;
+var lives = 3;
 var canvas = document.getElementById('canvas');
 var ctx = canvas.getContext('2d');//to draw
 var spaceShipX = canvas.width/2;
@@ -92,10 +95,13 @@ document.addEventListener('keyup', function dontMove(e) {
 function play() {
 
     
-    printSpaceShip();
-    printEnemies();
-    shooting();
-    backgorund();
+    if(level === 1) {
+        printSpaceShip();
+        printEnemies();
+        shooting();
+        backgorund();
+        rules();
+    }
     requestAnimationFrame(play);
 }
 play();
@@ -139,6 +145,7 @@ function shooting() {//dont open it
                             b.status = 0;//so it wont print it in the next frame    
                             array[2] = 0;//status
                             
+                            score++;
                         }
                     }
                 }
@@ -165,6 +172,7 @@ function shooting() {//dont open it
                             b.status = 0;//so it wont print it in the next frame    
                             array[5] = 0;   
                             
+                            score++;
                         }
                     }
                 }
@@ -191,6 +199,7 @@ function shooting() {//dont open it
                             b.status = 0;//so it wont print it in the next frame    
                             array[8] = 0;   
                             
+                            score++;
                         }
                     }
                 }
@@ -218,6 +227,7 @@ function shooting() {//dont open it
                             b.status = 0;//so it wont print it in the next frame    
                             array[11] = 0;//status
                             
+                            score++;
                         }
                     }
                 }
@@ -245,6 +255,7 @@ function shooting() {//dont open it
                             b.status = 0;//so it wont print it in the next frame    
                             array[14] = 0;//status
                             
+                            score++;
                         }
                     }
                 }
@@ -272,6 +283,7 @@ function shooting() {//dont open it
                             b.status = 0;//so it wont print it in the next frame    
                             array[17] = 0;//status
                             
+                            score++;
                         }
                     }
                 }
@@ -299,6 +311,7 @@ function shooting() {//dont open it
                             b.status = 0;//so it wont print it in the next frame    
                             array[20] = 0;//status
                             array[19] = -1;
+                            score++;
                         }
                     }
                 }
@@ -326,6 +339,7 @@ function shooting() {//dont open it
                             b.status = 0;//so it wont print it in the next frame    
                             array[23] = 0;//status
                             array[22] = -1;//y
+                            score++;
                         }
                     }
                 }
@@ -353,6 +367,7 @@ function shooting() {//dont open it
                             b.status = 0;//so it wont print it in the next frame    
                             array[26] = 0;//status
                             array[25] = -1;//y
+                            score++;
                         }
                     }
                 }
@@ -380,6 +395,7 @@ function shooting() {//dont open it
                             b.status = 0;//so it wont print it in the next frame    
                             array[29] = 0;//status
                             array[28] = -1;//y
+                            score++;
                         }
                     }
                 }
@@ -407,6 +423,7 @@ function shooting() {//dont open it
                             b.status = 0;//so it wont print it in the next frame    
                             array[32] = 0;//status
                             array[31] = -1;//y
+                            score++;
                         }
                     }
                 }
@@ -434,6 +451,7 @@ function shooting() {//dont open it
                             b.status = 0;//so it wont print it in the next frame    
                             array[35] = 0;//status
                             array[34] = -1;//y
+                            score++;
                         }
                     }
                 }
@@ -446,6 +464,10 @@ function shooting() {//dont open it
         reload = false;
     }
 
+    if(score === (enemiesColumns*enemiesRows)) {
+        alert('Has ganao');
+        document.location.reload();
+    }
 }
 
 function printEnemies() {
@@ -515,4 +537,15 @@ function backgorund() {
             vector[i].status = 0;
         }
     }
+}
+
+function rules() {
+
+    ctx.font = "16px Arial";
+    ctx.fillStyle = "#ffffff";
+    ctx.fillText("Score: " + score, 10, 15);
+
+    ctx.font = "16px Arial";
+    ctx.fillStyle = "#ffffff";
+    ctx.fillText("vidas: " + lives,canvas.width-80,15);
 }
