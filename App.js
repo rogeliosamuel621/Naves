@@ -165,348 +165,36 @@ function printSpaceShip() {
 
 function shooting() {//dont open it
 
-    if(numOfBullets > -1){
-        if(array[2] === 1) {//status
+    for(var i=0, y=1, s=2; i<array.length; i+=3, y+=3, s+=3) {
+        if(array[s] === 1) {
             ctx.beginPath();
-                        //x            //y
-            ctx.rect(array[0]+7.5, array[1], 5, 20);
+            ctx.rect(array[i], array[y], 5, 10);
             ctx.fillStyle = '#ffffff';
             ctx.fill();
             ctx.closePath();
-                //y
-            array[1] -= shootDy;
 
+            array[y] -= shootDy;
+
+            //verify if it touches any ball
             for(c=0; c<enemiesColumns; c++) {
                 for(r=0; r<enemiesRows; r++) {
                     b = enemies[c][r];
                     if(b.status == 1) {
-                        if(array[1] === b.y + enemiesWitdh && array[0] > b.x - enemiesWitdh-12 && array[0] < b.x + enemiesWitdh) {
+                        if(array[y] === b.y + enemiesWitdh && array[i] > b.x - enemiesWitdh-12 && array[i] < b.x + enemiesWitdh) {
                               //y                              //x                                  //x
                             b.status = 0;//so it wont print it in the next frame    
-                            array[2] = 0;//status
-                            
+                            array[s] = 0;//status
+                            array[y] = -1;//y
                             score++;
                         }
                     }
                 }
             }
-        }  
-    }
-    
-    if(numOfBullets > 0){
-        if(array[5] === 1) {
-            ctx.beginPath();
-            ctx.rect(array[3]+7.5, array[4], 5, 20);
-            ctx.fillStyle = '#ffffff';
-            ctx.fill();
-            ctx.closePath();
-        
-            array[4] -= shootDy;
-
-            for(c=0; c<enemiesColumns; c++) {
-                for(r=0; r<enemiesRows; r++) {
-                    b = enemies[c][r];
-                    if(b.status == 1) {
-                        if(array[4] === b.y + enemiesWitdh && array[3] > b.x - enemiesWitdh-12 && array[3] < b.x + enemiesWitdh) {
-                            
-                            b.status = 0;//so it wont print it in the next frame    
-                            array[5] = 0;   
-                            
-                            score++;
-                        }
-                    }
-                }
-            }
-        }  
-    }
-
-    if(numOfBullets > 1){
-        if(array[8] === 1) {
-            ctx.beginPath();
-            ctx.rect(array[6]+7.5, array[7], 5, 20);
-            ctx.fillStyle = '#ffffff';
-            ctx.fill();
-            ctx.closePath();
-        
-            array[7] -= shootDy;
-
-            for(c=0; c<enemiesColumns; c++) {
-                for(r=0; r<enemiesRows; r++) {
-                    b = enemies[c][r];
-                    if(b.status == 1) {
-                        if(array[7] === b.y + enemiesWitdh && array[6] > b.x - enemiesWitdh-12 && array[6] < b.x + enemiesWitdh) {
-                            
-                            b.status = 0;//so it wont print it in the next frame    
-                            array[8] = 0;   
-                            
-                            score++;
-                        }
-                    }
-                }
-            }
-        }  
-    }
-
-    if(numOfBullets > 2){
-        if(array[11] === 1) {//status
-            ctx.beginPath();
-                        //x            //y
-            ctx.rect(array[9]+7.5, array[10], 5, 20);
-            ctx.fillStyle = '#ffffff';
-            ctx.fill();
-            ctx.closePath();
-                //y
-            array[10] -= shootDy;
-
-            for(c=0; c<enemiesColumns; c++) {
-                for(r=0; r<enemiesRows; r++) {
-                    b = enemies[c][r];
-                    if(b.status == 1) {
-                        if(array[10] === b.y + enemiesWitdh && array[9] > b.x - enemiesWitdh-12 && array[9] < b.x + enemiesWitdh) {
-                              //y                              //x                                  //x
-                            b.status = 0;//so it wont print it in the next frame    
-                            array[11] = 0;//status
-                            
-                            score++;
-                        }
-                    }
-                }
-            }
-        }  
-    }
-
-    if(numOfBullets > 3){
-        if(array[14] === 1) {//status
-            ctx.beginPath();
-                        //x            //y
-            ctx.rect(array[12]+7.5, array[13], 5, 20);
-            ctx.fillStyle = '#ffffff';
-            ctx.fill();
-            ctx.closePath();
-                //y
-            array[13] -= shootDy;
-
-            for(c=0; c<enemiesColumns; c++) {
-                for(r=0; r<enemiesRows; r++) {
-                    b = enemies[c][r];
-                    if(b.status == 1) {
-                        if(array[13] === b.y + enemiesWitdh && array[12] > b.x - enemiesWitdh-12 && array[12] < b.x + enemiesWitdh) {
-                              //y                              //x                                  //x
-                            b.status = 0;//so it wont print it in the next frame    
-                            array[14] = 0;//status
-                            
-                            score++;
-                        }
-                    }
-                }
-            }
-        }  
-    }
-
-    if(numOfBullets > 4){
-        if(array[17] === 1) {//status
-            ctx.beginPath();
-                        //x            //y
-            ctx.rect(array[15]+7.5, array[16], 5, 20);
-            ctx.fillStyle = '#ffffff';
-            ctx.fill();
-            ctx.closePath();
-                //y
-            array[16] -= shootDy;
-
-            for(c=0; c<enemiesColumns; c++) {
-                for(r=0; r<enemiesRows; r++) {
-                    b = enemies[c][r];
-                    if(b.status == 1) {
-                        if(array[16] === b.y + enemiesWitdh && array[15] > b.x - enemiesWitdh-12 && array[15] < b.x + enemiesWitdh) {
-                              //y                              //x                                  //x
-                            b.status = 0;//so it wont print it in the next frame    
-                            array[17] = 0;//status
-                            
-                            score++;
-                        }
-                    }
-                }
-            }
-        }  
-    }
-
-    if(numOfBullets > 5){
-        if(array[20] === 1) {//status
-            ctx.beginPath();
-                        //x            //y
-            ctx.rect(array[18]+7.5, array[19], 5, 20);
-            ctx.fillStyle = '#ffffff';
-            ctx.fill();
-            ctx.closePath();
-                //y
-            array[19] -= shootDy;
-
-            for(c=0; c<enemiesColumns; c++) {
-                for(r=0; r<enemiesRows; r++) {
-                    b = enemies[c][r];
-                    if(b.status == 1) {
-                        if(array[19] === b.y + enemiesWitdh && array[18] > b.x - enemiesWitdh-12 && array[18] < b.x + enemiesWitdh) {
-                              //y                              //x                                  //x
-                            b.status = 0;//so it wont print it in the next frame    
-                            array[20] = 0;//status
-                            array[19] = -1;
-                            score++;
-                        }
-                    }
-                }
-            }
-        }  
-    }
-
-    if(numOfBullets > 6){
-        if(array[23] === 1) {//status
-            ctx.beginPath();
-                        //x            //y
-            ctx.rect(array[21]+7.5, array[22], 5, 20);
-            ctx.fillStyle = '#ffffff';
-            ctx.fill();
-            ctx.closePath();
-                //y
-            array[22] -= shootDy;
-
-            for(c=0; c<enemiesColumns; c++) {
-                for(r=0; r<enemiesRows; r++) {
-                    b = enemies[c][r];
-                    if(b.status == 1) {
-                        if(array[22] === b.y + enemiesWitdh && array[21] > b.x - enemiesWitdh-12 && array[21] < b.x + enemiesWitdh) {
-                              //y                              //x                                  //x
-                            b.status = 0;//so it wont print it in the next frame    
-                            array[23] = 0;//status
-                            array[22] = -1;//y
-                            score++;
-                        }
-                    }
-                }
-            }
-        }  
-    }
-
-    if(numOfBullets > 7){
-        if(array[26] === 1) {//status
-            ctx.beginPath();
-                        //x            //y
-            ctx.rect(array[24]+7.5, array[25], 5, 20);
-            ctx.fillStyle = '#ffffff';
-            ctx.fill();
-            ctx.closePath();
-                //y
-            array[25] -= shootDy;
-
-            for(c=0; c<enemiesColumns; c++) {
-                for(r=0; r<enemiesRows; r++) {
-                    b = enemies[c][r];
-                    if(b.status == 1) {
-                        if(array[25] === b.y + enemiesWitdh && array[24] > b.x - enemiesWitdh-12 && array[24] < b.x + enemiesWitdh) {
-                              //y                              //x                                  //x
-                            b.status = 0;//so it wont print it in the next frame    
-                            array[26] = 0;//status
-                            array[25] = -1;//y
-                            score++;
-                        }
-                    }
-                }
-            }
-        }  
-    }
-
-    if(numOfBullets > 8){
-        if(array[29] === 1) {//status
-            ctx.beginPath();
-                        //x            //y
-            ctx.rect(array[27]+7.5, array[28], 5, 20);
-            ctx.fillStyle = '#ffffff';
-            ctx.fill();
-            ctx.closePath();
-                //y
-            array[28] -= shootDy;
-
-            for(c=0; c<enemiesColumns; c++) {
-                for(r=0; r<enemiesRows; r++) {
-                    b = enemies[c][r];
-                    if(b.status == 1) {
-                        if(array[28] === b.y + enemiesWitdh && array[27] > b.x - enemiesWitdh-12 && array[27] < b.x + enemiesWitdh) {
-                              //y                              //x                                  //x
-                            b.status = 0;//so it wont print it in the next frame    
-                            array[29] = 0;//status
-                            array[28] = -1;//y
-                            score++;
-                        }
-                    }
-                }
-            }
-        }  
-    }
-
-    if(numOfBullets > 9){
-        if(array[32] === 1) {//status
-            ctx.beginPath();
-                        //x            //y
-            ctx.rect(array[30]+7.5, array[31], 5, 20);
-            ctx.fillStyle = '#ffffff';
-            ctx.fill();
-            ctx.closePath();
-                //y
-            array[31] -= shootDy;
-
-            for(c=0; c<enemiesColumns; c++) {
-                for(r=0; r<enemiesRows; r++) {
-                    b = enemies[c][r];
-                    if(b.status == 1) {
-                        if(array[31] === b.y + enemiesWitdh && array[30] > b.x - enemiesWitdh-12 && array[30] < b.x + enemiesWitdh) {
-                              //y                              //x                                  //x
-                            b.status = 0;//so it wont print it in the next frame    
-                            array[32] = 0;//status
-                            array[31] = -1;//y
-                            score++;
-                        }
-                    }
-                }
-            }
-        }  
-    }
-
-    if(numOfBullets > 10){
-        if(array[35] === 1) {//status
-            ctx.beginPath();
-                        //x            //y
-            ctx.rect(array[33]+7.5, array[34], 5, 20);
-            ctx.fillStyle = '#ffffff';
-            ctx.fill();
-            ctx.closePath();
-                //y
-            array[34] -= shootDy;
-
-            for(c=0; c<enemiesColumns; c++) {
-                for(r=0; r<enemiesRows; r++) {
-                    b = enemies[c][r];
-                    if(b.status == 1) {
-                        if(array[34] === b.y + enemiesWitdh && array[33] > b.x - enemiesWitdh-12 && array[33] < b.x + enemiesWitdh) {
-                              //y                              //x                                  //x
-                            b.status = 0;//so it wont print it in the next frame    
-                            array[35] = 0;//status
-                            array[34] = -1;//y
-                            score++;
-                        }
-                    }
-                }
-            }
-        }  
-    }
-
-    if(array[34] < 0 && reload) {
-        array = [];
-        reload = false;
+        }
     }
 
     if(score === (enemiesColumns*enemiesRows)) {
         score = 0;
-        alert('Has ganao');
         level = 2;
         array = [];
     }
@@ -660,6 +348,10 @@ function bossTakingDamage() {
 
             if(array[i] + 5 > weakPointX-30 && array[i] < weakPointX + 30 && array[y] == weakPointY + 30) {
                 score++;
+            }
+            if(score === 200) {
+                alert('Felicidades has ganado');
+                document.location.reload();
             }
         }
     }
