@@ -168,7 +168,7 @@ function shooting() {//dont open it
     for(var i=0, y=1, s=2; i<array.length; i+=3, y+=3, s+=3) {
         if(array[s] === 1) {
             ctx.beginPath();
-            ctx.rect(array[i], array[y], 5, 10);
+            ctx.rect(array[i]+7.5, array[y], 5, 10);
             ctx.fillStyle = '#ffffff';
             ctx.fill();
             ctx.closePath();
@@ -290,7 +290,7 @@ function Boss() {
 
     ctx.beginPath();
     ctx.arc(weakPointX, weakPointY, 30, 0, Math.PI*2);
-    ctx.fillStyle = "blue";
+    ctx.fillStyle = "#1f4068";
     ctx.fill();
     ctx.closePath();
 
@@ -339,7 +339,7 @@ function bossTakingDamage() {
     for(var i=0, y=1, s=2; i<array.length; i+=3, y+=3, s+=3) {
         if(array[s] === 1) {
             ctx.beginPath();
-            ctx.rect(array[i], array[y], 5, 10);
+            ctx.rect(array[i]+7.5, array[y], 5, 10);
             ctx.fillStyle = '#ffffff';
             ctx.fill();
             ctx.closePath();
@@ -351,6 +351,7 @@ function bossTakingDamage() {
             }
             if(score === 200) {
                 alert('Felicidades has ganado');
+                array = [];
                 document.location.reload();
             }
         }
