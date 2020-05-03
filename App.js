@@ -67,7 +67,7 @@ var bossDy = 2;
 var alreadySetY = false;
 var bossBulletX = 0;
 var bossBulletY = 0
-var bossBulletDy = 5;
+var bossBulletDy = 7;
 function bossBullets() {this.x = 0, this.y = 0, this.status = 0, this.print = 0}
 var bossVector = [];
 var newBossBullet;
@@ -77,6 +77,8 @@ for(var i=0; i<10; i++) {
     console.log(bossVector);
 }
 var contador = 0;
+var weakPointX = canvas.width/2;
+var weakPointY = bossY + 200;
 
 
 document.addEventListener('keydown', function move(e){
@@ -122,11 +124,13 @@ function play() {
     }
     if(level === 2) {
         printSpaceShip();
-        shooting();
+        bossTakingDamage();
         backgorund();
         rules();
         Boss();
+        lose();
     }
+    
     requestAnimationFrame(play);
 }
 play();
@@ -596,9 +600,16 @@ function Boss() {
     ctx.fill();
     ctx.closePath();
 
+    ctx.beginPath();
+    ctx.arc(weakPointX, weakPointY, 30, 0, Math.PI*2);
+    ctx.fillStyle = "blue";
+    ctx.fill();
+    ctx.closePath();
+
     if(!alreadySetY) {
 
         bossY += bossDy;
+        weakPointY += bossDy;
         if(bossY === (canvas.width/2)-500) {
             alreadySetY = true;
         }
@@ -631,9 +642,33 @@ function Boss() {
                 bossVector[i].y = 0;
                 bossVector[i].status = 0;
             }
-            if(lives === 0) {
-                document.location.reload();
+        }
+    }
+}
+
+function bossTakingDamage() {
+ 
+    for(var i=0, y=1, s=2; i<array.length; i+=3, y+=3, s+=3) {
+        if(array[s] === 1) {
+            ctx.beginPath();
+            ctx.rect(array[i], array[y], 5, 10);
+            ctx.fillStyle = '#ffffff';
+            ctx.fill();
+            ctx.closePath();
+
+            array[y] -= shootDy;
+
+            if(array[i] + 5 > weakPointX-30 && array[i] < weakPointX + 30 && array[y] == weakPointY + 30) {
+                score++;
             }
         }
+    }
+}
+
+function lose() {
+    if(lives === 0) {
+        ctx.clearRect(0, 0, canvas.width, canvas.height)
+        alert('Has perdido');
+        document.location.reload();
     }
 }
