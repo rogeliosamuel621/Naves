@@ -1,4 +1,4 @@
-var level = 2;
+var level = 1;
 var score = 0;
 var lives = 3;
 var damage = false;
