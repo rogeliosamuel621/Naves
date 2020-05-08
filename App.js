@@ -361,7 +361,7 @@ function bossTakingDamage() {
 function lose() {
     if(lives === 0) {
         ctx.clearRect(0, 0, canvas.width, canvas.height)
-        alert('Has perdido');
+        alert('Has perdido, cambia de pestaña y vuelve a esta para volver a e,pezar');
         document.location.reload();
     }
 }
