@@ -20,3 +20,14 @@ A simple videogame in order to practice and learn Javascript.
 
 ## Preview
 If you want to play this game you can check this link [Game](https://rogeliosamuel621.github.io/Naves/Index.html)
+
+## How it works
+Here I am going to explain to you how some functions work in my code. Functions that I suppose you can not find on the internet
+
+- Stars background
+
+At the start of the game we create one object for each star, also we generate random numbers in position X. To create the illusion that they are not the same stars0, that random numbers are generated when a star surpasses the gameboard ``` if(X > canvas.height) {object.status = 0} ```
+
+- How to print infinities bullets
+
+Each bullet is an object which is created every time you press the space bar ``` line 92 to 99 ``` and stored in an array To print every bullet there is a function in the code ``` "shooting" line 166 to 201``` we have a loop that runs through whole the array and checks if the status is 1, that means that is printed.
