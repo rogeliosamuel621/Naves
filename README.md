@@ -26,7 +26,7 @@ Here I am going to explain to you how some functions work in my code. Functions 
 
 - Stars background
 
-At the start of the game we create one object for each star, also we generate random numbers in position X. To create the illusion that they are not the same stars0, that random numbers are generated when a star surpasses the gameboard ``` if(X > canvas.height) {object.status = 0} ```
+At the start of the game we create one object for each star, also we generate random numbers in position X. To create the illusion that they are not the same stars, that random numbers are generated when a star surpasses the gameboard ``` if(X > canvas.height) {object.status = 0} ```
 
 - How to print infinities bullets
 
