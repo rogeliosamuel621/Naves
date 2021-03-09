@@ -19,7 +19,7 @@ A simple videogame in order to practice and learn Javascript.
 - To win you have to accumulate 200 points in the boss level.
 
 ## Preview
-If you want to play this game you can check this link [Game](https://rogeliosamuel621.github.io/Naves/Index.html)
+If you want to play this game you can check this link [Game](https://rogeliosamuel621.github.io/Naves-Game/Index.html)
 
 ## How it works
 Here I am going to explain to you how some functions work in my code. Functions that I suppose you can not find on the internet.
